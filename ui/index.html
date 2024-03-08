@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Mouse</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="maze" id="maze1" data-size="2x2">
+        <div class="row">
+            <div class="v-wall-row">
+                <div class="cell"></div>
+                <div class="v-wall wall"></div>
+                <div class="cell"></div>
+            </div>
+
+            <div class="h-wall-row">
+                <div class="h-wall wall"></div>
+                <div class="wall-col wall"></div>
+                <div class="h-wall wall"></div>
+            </div>
+
+            <div class="row">
+                <div class="v-wall-row">
+                    <div class="cell"></div>
+                    <div class="v-wall wall"></div>
+                    <div class="cell"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="v-wall-row"></div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    
+    <div id="maze-box"></div>
+    <div id="controls">
+        
+        <div class="control" id="selection-control">
+            Select :
+            <input type="radio" name="select" id="select-cell" checked class="hidden-input"> 
+            <label class="btn" for="select-cell">CELL</label>
+            
+            <input type="radio" name="select" id="select-start" class="hidden-input"> 
+            <label class="btn" for="select-start">START</label>
+            
+            <input type="radio" name="select" id="select-goal" class="hidden-input"> 
+            <label class="btn" for="select-goal">GOAL</label>
+        </div>
+        <label class="control" for="maze-size">
+            Maze-Size = <input type="number" value=5 id="maze-size">
+            <button id="set-size" class="btn">SET</button>
+        </label>
+
+        <button id="save-maze" class="btn">Save</button><br>
+        <textarea id="maze-data" placeholder="maze json data"></textarea><br>
+        <button id="load-maze" class="btn">Load</button>
+    </div>
+</body>
+<script type="module" src="./grid.js"></script>
+</html>
