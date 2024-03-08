@@ -74,12 +74,12 @@
     /* color: #fff; */
 }
 
-.cell#goal {
+.cell.goal {
     background-color: green;
     color: white;
 }
 
-.cell[type=start]{
+.cell.start {
     background-color: royalblue;
     color: white;
 }
@@ -109,7 +109,7 @@
 
 #controls .control  {
     display: block;
-    margin: 10px 5px;
+    margin: 20px 5px;
 }
 
 #controls input[type=number]{
@@ -125,13 +125,14 @@
     outline: 2px solid #333 ;
 }
 
-#selection-control input.hidden-input[type=radio]:checked + label{
+#controls input.hidden-input[type=radio]:checked + label{
     background-color: #333;
     color:#fff;
 }
 
 .btn {
     border: 1px solid;
+    border-color: #333 !important;
     border-radius: 5px;
     padding: 5px 10px;
     font-size: 1rem;
@@ -151,4 +152,82 @@
 }
 #load-maze {
     background-color: #89bcff;
+}
+
+#maze-box{
+    padding: 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    width: fit-content;
+    
+}
+#maze-container{
+    display: flex;
+}
+
+#maze-title{
+    text-align: center;
+}
+
+#clear-maze {
+    background-color: red;
+    color: #fff;
+}
+
+#bot{
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 0 20px;
+}
+
+#bot-container{
+    transition: 200ms;
+}
+
+#bot-container:hover{
+    transform: scale(1.1);
+}
+
+#bot-body{
+    height: 60px;
+    width: 40px;
+    /* background-color: red; */
+    outline: 2px solid #333;
+    border-radius: 5px;
+    transition: 300ms;
+    position: relative;
+}
+
+#bot-body > div{
+    --size: 15px;
+    height: var(--size);
+    width: var(--size);
+    outline: 1px solid #333;
+    font-size: 0.7rem;
+    position: absolute;
+    text-align: center;
+
+}
+
+#bot-body > div[data-mode=on]{
+    background-color: green;
+    color:white;
+}
+
+#bot-body > div[data-mode=off]{
+    background-color: red;
+    color:white;
+}
+
+#front{
+    left: calc(50% - var(--size) / 2);
+}
+
+#right{
+    top: 20px;
+    right: 0;
+}
+
+#left{
+    top: 20px; 
 }
