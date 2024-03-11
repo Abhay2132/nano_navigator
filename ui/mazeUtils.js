@@ -84,6 +84,7 @@ export function loadMaze(mazeData){
 
     $("#maze-body").innerHTML = makeMaze(size, mazeId)
     $("#maze-title").innerHTML = size+"x"+size;
+    $("#maze-size").value = size;
     for(let y=0 ;y<wallMatrix.length && y < size; y++){
         let [v_walls , h_walls] = wallMatrix[y];
 
@@ -152,4 +153,26 @@ export function getDistMatrix(){
         )
     }
     return dm;
+}
+
+export function updateGoalUI(){
+    let [gx, gy] = mazeData.goal;
+    
+    $(".goal").classList.remove("goal");
+    $("#c"+gy+"-"+gx).classList.add("goal");
+}
+
+export function updateStartUI(){
+    let [sx, sy] = mazeData.start;
+    $("label[for=cell-dist]").click();
+    
+    $(".start").classList.remove("start");
+    $("#c"+sy+"-"+sx).classList.add("start");
+}
+
+export function updateActiveUI(){
+    let [x, y] = botData.pos;
+    
+    $(".active").classList.remove("active");
+    $("#c"+y+"-"+x).classList.add("active");
 }

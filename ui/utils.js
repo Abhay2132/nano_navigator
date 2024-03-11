@@ -9,3 +9,13 @@ export function cycle(min, max , n){
 
 export  const wait = (n=0) => new Promise(res => setTimeout(res, n));
 
+/**
+ * Copy the Key and values from source to target , usefull when target is const
+ * @param {object} source 
+ * @param {object} target 
+ */
+export function copyObject(source,target){
+    for(let key in source){
+        target[key] = source[key];
+    }
+}

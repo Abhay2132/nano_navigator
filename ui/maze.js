@@ -1,5 +1,5 @@
-import { makeMaze, setCellColor, getCell, getWallMatrix, loadMaze, parseID, getCellMatrix, updateBotLocUI } from "./mazeUtils.js";
-import {$, $$} from "./utils.js"
+import { makeMaze, setCellColor, getCell, getWallMatrix, loadMaze, parseID, getCellMatrix, updateBotLocUI, updateGoalUI, updateStartUI, updateActiveUI } from "./mazeUtils.js";
+import {$, $$, copyObject} from "./utils.js"
 import { botData, mazeData } from "./data.js";
 import { turnLeft, turnRight, updateBotDir } from "./botUtils.js";
 import { reset } from "./arduino.js";
@@ -25,18 +25,16 @@ export function activateControls() {
         // e.target.classList.add("active");
         switch (i) {
             case 1:
-                $(".active").classList.remove("active");
-                e.target.classList.add("active");
+                botData.pos = parseID(e.target);
+                updateActiveUI();
                 break;
             case 2:
-                $(".start").classList.remove("start");
-                e.target.classList.add("start");
                 mazeData.start = parseID(e.target);
+                updateStartUI();
                 break;
             case 3:
-                $(".goal").classList.remove("goal");
-                e.target.classList.add("goal");
                 mazeData.goal = parseID(e.target);
+                updateGoalUI();
                 break;
 
         }
@@ -60,7 +58,9 @@ export function initControls(){
         console.log(maze_data)
         if (!maze_data) return;
         
-        let mazeData = JSON.parse(maze_data);
+        let _ = JSON.parse(maze_data);
+
+        copyObject(_, mazeData);
         
         loadMaze(mazeData)
         activateControls();
@@ -106,10 +106,19 @@ export function initControls(){
     })
 
     $("#reset").onclick=()=>reset();
+    $("#swap-start-goal").onclick = ()=>{
+        let start = Array.from(mazeData.start);
+        mazeData.start = Array.from(mazeData.goal);
+        mazeData.goal = start;
+        $("label[for=")
+    }
     
 }
 
 export function updateUI(){
     updateBotLocUI();
     updateBotDir();
+    updateActiveUI();
+    updateGoalUI();
+    updateStartUI();
 }

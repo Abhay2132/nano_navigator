@@ -3,7 +3,7 @@ import { botData, mazeData } from "./data.js";
 import { stepForward, checkFront, checkLeft, checkRight, moveTo , turnLeft, turnRight, getFront, getRight, getLeft, goalReached, updateBotDir, uTurn } from "./botUtils.js";
 
 
-const DM = getDistMatrix();
+let DM = getDistMatrix();
 
 /**
  * dir = 1 | 2 | 3 | 4 => N | E | S | W
@@ -70,7 +70,7 @@ export function loop(){
 
     if(stage == 2){
         
-        let lastCell = path.pop();
+        let lastCell = path.at(-1);
         if(lastCell.length > 1){
             moveTo(lastCell.shift());
             // lastCell.unshift();
@@ -82,6 +82,7 @@ export function loop(){
         }
 
         moveTo(lastCell[0]);
+        path.pop();
 
         return;
     }
@@ -90,4 +91,6 @@ export function loop(){
 export function reset(){
     path.length = 0;
     botData.pos = [...mazeData.start];
+    stage = 1;
+    DM = getDistMatrix();
 }
