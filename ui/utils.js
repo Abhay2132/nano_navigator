@@ -8,3 +8,4 @@ export function cycle(min, max , n){
 }
 
 export  const wait = (n=0) => new Promise(res => setTimeout(res, n));
+

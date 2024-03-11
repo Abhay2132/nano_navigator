@@ -138,7 +138,7 @@
     font-size: 1rem;
 }
 
-.btn:active{
+.btn:active, .bot-btn:active{
     transform: scale(0.9);
 }
 
@@ -210,24 +210,42 @@
 }
 
 #bot-body > div[data-mode=on]{
-    background-color: green;
-    color:white;
-}
-
-#bot-body > div[data-mode=off]{
     background-color: red;
     color:white;
 }
 
+#bot-body > div[data-mode=off]{
+    /* background-color: red;
+    color:white; */
+}
+
 #front{
     left: calc(50% - var(--size) / 2);
+    border-radius: 0 0 3px 3px;
 }
 
 #right{
     top: 20px;
+    border-radius: 3px 0 0 3px;
     right: 0;
 }
 
 #left{
+    border-radius: 0 3px 3px 0;
     top: 20px; 
+}
+
+.bot-btn{
+    margin-bottom: 10px;
+    /* background-color: red; */
+    padding:  5px;
+    border-radius: 5px;
+    text-align: center;
+    outline: 1px solid #333;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.bot-btn:hover{
+    background-color: #ddd;
 }

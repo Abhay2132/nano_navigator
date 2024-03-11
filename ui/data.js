@@ -13,7 +13,10 @@ export const mazeData = {
 }
 
 export const botData = {
-    dir : 1, // N W S E
-    pos : [0,0], // [x,y]
+    dir : 3, // N E S W = 1 2 3 4
+    pos : [...mazeData.start], // [x,y]
     
 }
+
+window.botData = botData;
+window.mazeData = mazeData;

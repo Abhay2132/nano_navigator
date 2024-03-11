@@ -1,3 +1,4 @@
+import { botData, mazeData } from "./data.js";
 import { $, $$ } from "./utils.js";
 
 const _maze = (mazeBody="", mazeId="", size=0) =>  `<div id="${mazeId}" data-size="${size}" class="maze">${mazeBody}</div>`;
@@ -107,7 +108,7 @@ export function parseID(tag){
     let id = tag.id.split("-");
     let x = id[1];
     let y = id[0].slice(1);
-    return [x,y]
+    return [parseInt(x),parseInt(y)]
 }
 
 const getMazeSize = mazeId => parseInt($("#"+mazeId).dataset.size);
@@ -126,4 +127,29 @@ export function getCellMatrix(mazeId){
         }
     }
     return cellMatrix;
+}
+
+export function generateEmptyWallMatrix (size){
+    let wm = Array.from({length:size-1}).map(e => [
+        Array.from({length: size-1}).map(_=> 0),
+        Array.from({length: size}).map(_=>0)
+    ]);
+    wm.push([Array.from({length:size-1}).map(_=>0)]);
+    return wm;
+}
+
+export function updateBotLocUI(){
+    $(".active").classList.remove("active");
+    $(`#c${botData.pos[1]}-${botData.pos[0]}`).classList.add("active");
+}
+
+export function getDistMatrix(){
+    let [gx,gy] = mazeData.goal;
+    let dm = [];
+    for(let y=0; y<mazeData.size ; y++){
+        dm.push(
+            Array.from({length:mazeData.size}).map((e,x)=>(Math.abs(y-gy)+Math.abs(x-gx)))
+        )
+    }
+    return dm;
 }
