@@ -1,6 +1,7 @@
 import { getDistMatrix } from "./mazeUtils.js"
 import { botData, mazeData } from "./data.js";
 import { stepForward, checkFront, checkLeft, checkRight, moveTo , turnLeft, turnRight, getFront, getRight, getLeft, goalReached, updateBotDir, uTurn } from "./botUtils.js";
+import { updateUI } from "./maze.js";
 
 
 let DM = getDistMatrix();
@@ -34,6 +35,7 @@ const createPathUnit = (loc, type) => ({loc, type});
 var stage = 1;
 var path = [[botData.pos]];
 var pathMoves = [];
+var visitedCells = new Set();
 
 export function setup(){
     // define pinModes
@@ -42,8 +44,15 @@ export function setup(){
 
 export function loop(){
     let [x,y] = botData.pos;
+
+    if(DM.length != mazeData.size) DM = getDistMatrix();
     // console.log(botData.pos)
     if(stage == 1){
+        if(visitedCells.has(x+"-"+y)){
+            stage = 2;
+            return;
+        }
+        visitedCells.add(x+"-"+y);
 
         if(goalReached()){
             stage = 3;
@@ -56,6 +65,12 @@ export function loop(){
         if(!checkRight()) arr.push(getRight())
 
         if(arr.length == 0) {
+            if(path.length == 1) {
+                uTurn();
+                visitedCells.delete(x+"-"+y);
+                return;
+            }
+            
             stage = 2;
             return;
         }
@@ -72,7 +87,7 @@ export function loop(){
         
         let lastCell = path.at(-1);
         if(lastCell.length > 1){
-            moveTo(lastCell.shift());
+            moveTo(lastCell.shift()); 
             // lastCell.unshift();
             moveTo(path[path.length - 2][0]);
             moveTo(lastCell[0]);
@@ -90,7 +105,11 @@ export function loop(){
 
 export function reset(){
     path.length = 0;
+    path.push([botData.pos]);
     botData.pos = [...mazeData.start];
     stage = 1;
     DM = getDistMatrix();
+
+    updateUI();
+    visitedCells.clear();
 }

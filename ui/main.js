@@ -17,10 +17,10 @@ while(true){
     // if(window.pause) continue;
     if(!window.pause) {
         loop();
+        updateUI();
     }
 
     
-    updateUI();
 }
 
 })();

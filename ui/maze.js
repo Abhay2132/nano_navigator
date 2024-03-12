@@ -55,7 +55,7 @@ export function initControls(){
     
     $("#load-maze").addEventListener("click", e => {
         let maze_data = $("#maze-data").value;
-        console.log(maze_data)
+        // console.log(maze_data)
         if (!maze_data) return;
         
         let _ = JSON.parse(maze_data);
@@ -64,6 +64,7 @@ export function initControls(){
         
         loadMaze(mazeData)
         activateControls();
+        $("label[for=cell-dist]").click();
     })
     
     $("#set-size").addEventListener("click", e => {
@@ -110,7 +111,9 @@ export function initControls(){
         let start = Array.from(mazeData.start);
         mazeData.start = Array.from(mazeData.goal);
         mazeData.goal = start;
-        $("label[for=")
+
+        updateUI();
+        // $("label[for=")
     }
     
 }
