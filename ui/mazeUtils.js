@@ -1,4 +1,5 @@
 import { botData, mazeData } from "./data.js";
+import { FloodFill, emptyFloodMatrix } from "./floodFill.js";
 import { $, $$ } from "./utils.js";
 
 const _maze = (mazeBody="", mazeId="", size=0) =>  `<div id="${mazeId}" data-size="${size}" class="maze">${mazeBody}</div>`;
@@ -9,8 +10,8 @@ const _h_row = (b="", _id="") => `<div class="h-wall-row" id=${_id} >${b}</div>`
 
 const _cell = (n="", _id="") => ` <div class="cell" id=${_id} >${n}</div>`
 
-const _v_wall = (_id="", mode="off") => `<div class="v-wall wall" id=${_id} mode=${mode}></div>`;
-const _h_wall = (_id="", mode="off") => `<div class="h-wall wall" id=${_id} mode=${mode}></div>`;
+const _v_wall = (_id="", mode="off") => `<div class="v-wall wall" type=unknown id=${_id} mode=${mode}></div>`;
+const _h_wall = (_id="", mode="off") => `<div class="h-wall wall" type=unknown id=${_id} mode=${mode}></div>`;
 
 const _wall_col = ( _id="") => `<div class="wall-col wall" id=${_id} ></div>`;
 
@@ -164,7 +165,7 @@ export function updateGoalUI(){
 
 export function updateStartUI(){
     let [sx, sy] = mazeData.start;
-    $("label[for=cell-dist]").click();
+    // $("label[for=cell-dist]").click();
     
     $(".start").classList.remove("start");
     $("#c"+sy+"-"+sx).classList.add("start");
@@ -175,4 +176,32 @@ export function updateActiveUI(){
     
     $(".active").classList.remove("active");
     $("#c"+y+"-"+x).classList.add("active");
+}
+
+export function updateKnownWallsUI(walls){
+    for(let y=0; y<walls.length; y++){
+        let [vWalls, hWalls] = walls[y];
+        for(let x=0; x<vWalls.length; x++){
+            $("#v"+y+"-"+x).setAttribute("type", vWalls[x]==1 ? "known":"unknown");
+        }
+        if(hWalls && hWalls.length > 0)
+        for(let x=0; x<hWalls.length; x++){
+            $("#h"+y+"-"+x).setAttribute("type", (hWalls[x])==1 ? "known":"unknown");
+        }
+    }
+
+    console.log(walls);
+}
+
+/**
+ * Updates the Maze cell values acc. to flood Matrix
+ * @param {[[int]]} floodMatrix 
+ */
+export function updateFloodUI(floodMatrix){
+    let size = floodMatrix.length;
+    for(let y=0; y<size ; y++){
+        for(let x=0; x<size; x++){
+            $("#c"+y+"-"+x).innerHTML = floodMatrix[y][x];
+        }
+    }
 }

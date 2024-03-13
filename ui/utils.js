@@ -19,3 +19,32 @@ export function copyObject(source,target){
         target[key] = source[key];
     }
 }
+
+export function argMin(arr){
+    let i=0;
+    let min = arr[0];
+    for(let a=1; a<arr.length ; a++){
+        if(arr[a] < min){
+            i=a;
+            min = arr[a];
+        }
+    }
+    return i;
+}
+
+export function argsMin(arr){
+    let mi = [];
+    let min = arr[0];
+    
+    for(let i=1; i < arr.length ; i++){
+        if(arr[i]<min) min = arr[i];
+    }
+
+    for(let i=0; i<arr.length ; i++){
+        if(arr[i] == min){
+            mi.push(i);
+        }
+    }
+
+    return mi;
+}

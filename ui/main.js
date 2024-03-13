@@ -1,5 +1,5 @@
 import { createMaze, updateUI } from "./maze.js";
-import { setup, loop } from "./arduino.js";
+import { setup, loop } from "./arduino2.js";
 import { wait , $} from "./utils.js";
 import { updateBotDir, stepForward, updateSensors } from "./botUtils.js";
 
@@ -16,7 +16,7 @@ while(true){
     await wait(100);
     // if(window.pause) continue;
     if(!window.pause) {
-        loop();
+        await loop();
         updateUI();
     }
 

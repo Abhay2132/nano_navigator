@@ -22,14 +22,16 @@
     cursor:pointer;
 }
 
-
-
 .wall{
-    background-color: rgba(255, 119, 0, 0.2);
+    background-color: rgba(0,0,0,0.01);
 }
 
-.wall[mode=on]{
+.wall[mode=on][type=known]{
     background-color: black;
+}
+
+.wall[mode=on][type=unknown]{
+    background-color: red;
 }
 
 .v-wall-row , .h-wall-row {
@@ -249,3 +251,4 @@
 .bot-btn:hover{
     background-color: #ddd;
 }
+

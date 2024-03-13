@@ -1,8 +1,9 @@
-import { makeMaze, setCellColor, getCell, getWallMatrix, loadMaze, parseID, getCellMatrix, updateBotLocUI, updateGoalUI, updateStartUI, updateActiveUI } from "./mazeUtils.js";
+import { makeMaze, setCellColor, getCell, getWallMatrix, loadMaze, parseID, getCellMatrix, updateBotLocUI, updateGoalUI, updateStartUI, updateActiveUI, updateFloodUI } from "./mazeUtils.js";
 import {$, $$, copyObject} from "./utils.js"
 import { botData, mazeData } from "./data.js";
 import { turnLeft, turnRight, updateBotDir } from "./botUtils.js";
-import { reset } from "./arduino.js";
+import { FloodFill } from "./floodFill.js";
+import { floodMatrix, reset } from "./arduino2.js";
 
 export function createMaze(){
     loadMaze(mazeData)
@@ -114,6 +115,23 @@ export function initControls(){
 
         updateUI();
         // $("label[for=")
+    }
+
+    $("#flood-fill").onclick = ()=>{
+        let floodMatrix = Array.from({length:mazeData.size}).map(e => Array.from({length:mazeData.size}).map(_=>0));
+        
+        FloodFill(floodMatrix, [mazeData.goal], mazeData.wallMatrix);
+        console.log(floodMatrix);
+
+        for(let y=0; y<floodMatrix.length ;y++){
+            for(let x=0; x<floodMatrix[y].length ; x++){
+                $("#c"+y+"-"+x).innerHTML = floodMatrix[y][x] == Infinity ? 'i':floodMatrix[y][x];
+            }
+        }
+    }
+
+    $("#known-flood-fill").onclick = ()=>{
+        updateFloodUI(floodMatrix);
     }
     
 }
