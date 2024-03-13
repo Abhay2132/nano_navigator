@@ -1,3 +1,5 @@
+import { countInArr } from "./utils.js";
+
 export function getNLocs(size, cell){
     let n = Array.from({length:size}).map(_=>false);
     let [x,y] = cell;
@@ -126,4 +128,22 @@ export function FloodFill(floodMatrix, goals, knownWallMatrix){
 
 export function emptyFloodMatrix(size){
     return Array.from({length:size}).map(_=>Array.from({length:size}).map(_=>Infinity));
+}
+
+export function smoothPath(path){
+    let newPath = [];
+    for(let i=0 ; i<path.length; i++){
+        if(countInArr(path, path[i]) > 1){
+            let j=i;
+            while(j++<path.length-1){
+                if(path[j] == path[i]) {
+                    i = j;
+                    break;
+                }
+            }
+        }
+        newPath.push(path[i]);
+    }
+
+    return newPath;
 }

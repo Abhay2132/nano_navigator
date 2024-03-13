@@ -211,3 +211,4 @@ export function swapGS() {
     mazeData.goal = Array.from(mazeData.start);
     mazeData.start = Array.from(g1);
 }
+

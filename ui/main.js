@@ -13,7 +13,7 @@ updateBotDir();
 $("label[for=cell-dist]").click();
 setup();
 while(true){
-    await wait(100);
+    await wait(10);
     // if(window.pause) continue;
     if(!window.pause) {
         await loop();

@@ -48,3 +48,11 @@ export function argsMin(arr){
 
     return mi;
 }
+
+export function countInArr(arr, n){
+    let count = 0;
+    for(let i of arr){
+        if(i==n) count += 1;
+    }
+    return count;
+}

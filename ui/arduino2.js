@@ -1,6 +1,6 @@
 // import { goalReached } from "./botUtils.js";
 import { botData, mazeData } from "./data.js";
-import { FloodFill, emptyFloodMatrix, getNLocs, isWallin } from "./floodFill.js";
+import { FloodFill, emptyFloodMatrix, getNLocs, isWallin, smoothPath } from "./floodFill.js";
 import { updateUI } from "./maze.js";
 import { generateEmptyWallMatrix, updateKnownWallsUI, updateFloodUI, swapGS } from "./mazeUtils.js";
 import { argsMin, wait } from "./utils.js";
@@ -48,7 +48,7 @@ function addWalls() {
 }
 
 export function setup() {
-    walls = generateEmptyWallMatrix(mazeData.size)
+    walls = generateEmptyWallMatrix(mazeData.size);
     floodMatrix = emptyFloodMatrix(mazeData.size);
     FloodFill(floodMatrix, [mazeData.goal], walls);
 }
@@ -59,7 +59,7 @@ export async function loop() {
     if (stage == 1) {
 
 
-        if (path.length > 1 && path[path.length - 2] == x + "-" + y) {
+        if (path.length > 1 &&  path[path.length - 2] == x + "-" + y) {
             path.pop();
         } else {
             path.push(x + "-" + y);
@@ -144,6 +144,7 @@ export async function loop() {
     }
 
     if (stage == 4) {
+        bestPath = Array.from(smoothPath(bestPath));
         let [x,y] = botData.pos;
 
         let [sx,sy] = bestPath[0].split("-").map(n=>parseInt(n));
