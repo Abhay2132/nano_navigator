@@ -59,11 +59,12 @@ export async function loop() {
     if (stage == 1) {
 
 
-        if (path.length > 1 &&  path[path.length - 2] == x + "-" + y) {
-            path.pop();
-        } else {
-            path.push(x + "-" + y);
-        }
+        // if (path.length > 1 &&  path[path.length - 2] == x + "-" + y) {
+        //     path.pop();
+        // } else {
+        //     path.push(x + "-" + y);
+        // }
+        path.push(x+"-"+y)
         // add new walls
         addWalls();
 
@@ -108,7 +109,7 @@ export async function loop() {
     }
 
     if (stage == 3) { // when we reached from either goal to start or start to goal
-
+        path = smoothPath(path);
         if(bestPath.length == 0){
             for(let i=0; i< path.length ; i++){
                 bestPath.push(path[i]);
@@ -171,10 +172,11 @@ export async function loop() {
 }
 
 export function reset() {
-    // setup();
+    setup();
     stage = 1;
     path.length = 0;
     botData.pos = Array.from(mazeData.start);
+    currCycle = 1;
     // path.push([botData.pos]);
 
     // FloodFill(floodMatrix, [mazeData.goal], walls);
